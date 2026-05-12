@@ -1,0 +1,39 @@
+title: "MedHallu"
+description: |
+  Evaluates LLM ability to detect hallucinations in medical question-answering.
+  Each sample presents a PubMed-derived knowledge passage, a biomedical question,
+  and a candidate answer; the model must classify the answer as factual or
+  hallucinated. Dataset rows are doubled — one sample with the ground-truth answer
+  (label: factual) and one with the hallucinated answer (label: hallucinated) —
+  yielding binary classification accuracy as the primary metric. Results are
+  stratified by difficulty tier (easy / medium / hard) stored in sample metadata.
+arxiv: "https://arxiv.org/abs/2408.08511"
+contributors:
+  - nath-netizen
+tags:
+  - Medical
+  - Hallucination
+tasks:
+  - name: medhallu
+    task_path: src/medhallu/medhallu.py
+source:
+  repository_url: https://github.com/nath-netizen/medhallu-eval
+  repository_commit: 47cd855e8337c2577e082a84b48ee137334fb6c5
+  maintainers:
+    - nath-netizen
+
+evaluation_report:
+  timestamp: "May 2026"
+  commit: 47cd855e8337c2577e082a84b48ee137334fb6c5
+  version: "1"
+  command: "inspect eval src/medhallu/medhallu.py@medhallu --limit 40 --model openai/gpt-4o"
+  results:
+    - model: "openai/gpt-4o"
+      provider: "OpenAI"
+      metrics:
+        - {key: accuracy, value: 0.750}
+        - {key: stderr,   value: 0.069}
+  notes:
+    - "Smoke test on 40 samples (20 dataset rows × 2 samples each)."
+    - "Random baseline accuracy = 0.50 (binary classification, balanced by construction)."
+    - "Difficulty stratification (easy/medium/hard) available in sample metadata for future runs."
