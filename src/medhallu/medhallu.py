@@ -51,7 +51,7 @@ def medhallu() -> Task:
         DATASET_ID,
         DATASET_CONFIG,
         revision=DATASET_REVISION,
-        split="test",
+        split="train",
         trust_remote_code=False,
     )
 
